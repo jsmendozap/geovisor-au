@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import soda from "soda-js";
-import { escape, from, op } from "arquero";
 import { WaveSpinner } from "react-spinners-kit";
-import { MeterChart } from "@carbon/charts-react";
 import Row from "./Row";
+import dna from "../media/dna.svg";
+import tree from "../media/tree.svg";
+import bio from "../media/bio.svg";
+import { Collapse } from "antd";
+import InfRegion from "./InfRegion";
+import GrowthHabit from "./GrowthHabit";
 
 const Sidebar = () => {
   const [data, setData] = useState(null);
@@ -20,50 +24,36 @@ const Sidebar = () => {
       });
   }, []);
 
-  const options = {
-    title: "Árboles por comuna",
-    height: "200px",
-    legend: {
-      enabled: true,
+  const items = [
+    {
+      key: "1",
+      label: (
+        <span className="text-lg" style={{ fontFamily: "Inclusive Sans" }}>
+          Cifras biodiversidad
+        </span>
+      ),
+      children: (
+        <div>
+          <Row data={data} which={1} img={tree} />
+          <Row data={data} which={2} img={bio} />
+          <Row data={data} which={3} img={dna} />
+          <GrowthHabit data={data} />
+        </div>
+      ),
     },
-    meter: {
-      proportional: {
-        total: 101285,
-        unit: "Árboles",
-      },
+    {
+      key: "2",
+      label: (
+        <span className="text-lg" style={{ fontFamily: "Inclusive Sans" }}>
+          Árboles por comuna
+        </span>
+      ),
+      children: <InfRegion data={data} />,
     },
-    color: {
-      pairing: {
-        option: 2,
-      },
-    },
-    tooltip: {
-      customHTML: (data) => customTooltip(data),
-    },
-  };
-
-  const summary = (data) => {
-    return from(data)
-      .groupby("comuna")
-      .count({ as: "value" })
-      .derive({ group: escape((d) => parseInt(d.comuna)) })
-      .orderby("group", "value")
-      .objects();
-  };
-
-  const customTooltip = (data) => {
-    return `<div>
-          <p>
-            Comuna: ${data[0].label}
-          </p>
-          <p>
-            Árboles: ${data[0].value.replace(",", ".")}
-          </p>
-        </div>`;
-  };
+  ];
 
   return (
-    <div className="px-5 py-5">
+    <div className="py-5 overflow-y-auto border-r border-gray-200">
       <SearchBar />
       {data === null ? (
         <div
@@ -77,10 +67,22 @@ const Sidebar = () => {
           <WaveSpinner size={80} color="#686769" />
         </div>
       ) : (
-        <div className="mt-4 ml-2">
-          <Row data={data} which={1} text="Número de especies de árboles" />
-          <Row data={data} which={2} text="Número de familias" />
-          <MeterChart data={summary(data)} options={options} />
+        <div className="mt-5 mx-3">
+          <Collapse
+            ghost
+            items={items}
+            expandIconPosition="end"
+            defaultActiveKey={["1", "2", "3"]}
+          />
+          <div className="mt-3 ml-4" style={{ fontFamily: "Inclusive Sans" }}>
+            <p className="font-medium text-lg">Fuente de información:</p>
+            <a
+              href="https://www.datos.gov.co/Ambiente-y-Desarrollo-Sostenible/Censo-de-Arbolado-urbano-en-Ibagu-Sria-Ambiente-y-/am4p-tz7w/about_data"
+              target="_blank"
+            >
+              <li className="ml-3">Datos abiertos</li>
+            </a>
+          </div>
         </div>
       )}
     </div>

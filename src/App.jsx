@@ -28,7 +28,10 @@ function App() {
         ]}
       />
       <Header />
-      <div className="grid grid-cols-[28%_72%]">
+      <div
+        className="grid grid-cols-[28%_72%]"
+        style={{ height: "calc(100vh - 45px)" }}
+      >
         <Sidebar />
         <LeafletMap />
       </div>

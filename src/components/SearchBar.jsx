@@ -77,7 +77,7 @@ const SearchBar = () => {
 
   return (
     <>
-      <Space.Compact>
+      <Space.Compact className="px-5">
         <Select
           defaultValue="nom_cientifico"
           options={options}
