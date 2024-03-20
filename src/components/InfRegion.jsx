@@ -6,12 +6,14 @@ const InfRegion = ({ data }) => {
   const options = {
     height: "200px",
     legend: {
-      enabled: false,
+      enabled: true,
+    },
+    toolbar: {
+      enabled: true,
     },
     meter: {
       proportional: {
         total: 101285,
-        unit: "Árboles",
       },
     },
     color: {

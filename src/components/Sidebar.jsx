@@ -50,6 +50,15 @@ const Sidebar = () => {
       ),
       children: <InfRegion data={data} />,
     },
+    {
+      key: "3",
+      label: (
+        <span className="text-lg" style={{ fontFamily: "Inclusive Sans" }}>
+          Estado de conservación
+        </span>
+      ),
+      children: <span>a</span>,
+    },
   ];
 
   return (
