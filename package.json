@@ -26,6 +26,7 @@
     "react-esri-leaflet": "^2.0.1",
     "react-google-font-loader": "^1.1.0",
     "react-leaflet": "^4.2.1",
+    "react-leaflet-cluster": "^2.1.0",
     "react-spinners-kit": "^1.9.1",
     "soda-js": "^0.2.3"
   },

@@ -28,7 +28,7 @@ const Body = ({ data, which }) => {
   const text = which === 1 ? "Árboles" : which === 2 ? "Especies" : "Familias";
 
   return (
-    <div className="flex items-end mb-2">
+    <div className="flex mb-2">
       <span>
         {
           <CountUp

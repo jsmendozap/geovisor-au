@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import soda from "soda-js";
 import { WaveSpinner } from "react-spinners-kit";
@@ -9,6 +9,7 @@ import bio from "../media/bio.svg";
 import { Collapse } from "antd";
 import InfRegion from "./InfRegion";
 import GrowthHabit from "./GrowthHabit";
+import Uicn from "./Uicn";
 
 const Sidebar = () => {
   const [data, setData] = useState(null);
@@ -57,7 +58,7 @@ const Sidebar = () => {
           Estado de conservación
         </span>
       ),
-      children: <span>a</span>,
+      children: <Uicn data={data} />,
     },
   ];
 
