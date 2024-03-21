@@ -6,7 +6,7 @@ const Header = () => {
     <div className="flex flex-row items-center bg-[#162945] py-2 px-4">
       <img src={trees} width="35px" alt="trees" className="mr-2" />
       <span
-        className="font-semibold text-xl text-gray-50"
+        className="font-semibold text-xl text-gray-50 mt-1"
         style={{ fontFamily: "Inclusive Sans", fontSize: "22px" }}
       >
         Arbolado urbano de Ibagué
