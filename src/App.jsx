@@ -1,9 +1,11 @@
-import "@carbon/charts-react/styles.css";
 import Header from "./components/Header";
 import LeafletMap from "./components/LeafletMap";
 import Sidebar from "./components/Sidebar";
 import GoogleFontLoader from "react-google-font-loader";
 import React, { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import "@carbon/charts-react/styles.css";
+import { ToastContainer } from "react-toastify";
 
 export const DataContext = React.createContext();
 
@@ -42,6 +44,7 @@ function App() {
           <LeafletMap />
         </div>
       </DataContext.Provider>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }

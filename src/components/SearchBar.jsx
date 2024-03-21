@@ -39,6 +39,9 @@ const SearchBar = () => {
       .getRows()
       .on("success", (rows) => {
         setData(rows);
+      })
+      .on("error", (error) => {
+        console.error("Error");
       });
   };
 

@@ -1,11 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  ZoomControl,
+} from "react-leaflet";
 import { FeatureLayer } from "react-esri-leaflet";
 import { DataContext } from "../App";
 import { from, escape } from "arquero";
 import * as turf from "@turf/turf";
 import proj4 from "proj4";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import { toast } from "react-toastify";
+import { Tooltip } from "antd";
+import TooltipSp from "./TooltipSp";
 
 const LeafletMap = () => {
   const [data, setData] = useContext(DataContext);
@@ -24,30 +33,35 @@ const LeafletMap = () => {
   };
 
   useEffect(() => {
-    if (data) {
-      const query = from(data)
-        .select(
-          "nom_cientifico",
-          "nom_comun",
-          "num_arbol",
-          "comuna",
-          "barrio",
-          "x",
-          "y"
-        )
-        .derive({
-          x: escape((d) => fixCRS(d.x, d.y, 1)),
-          y: escape((d) => fixCRS(d.x, d.y, 2)),
-        })
-        .objects();
+    if (!!data) {
+      if (data.length > 0) {
+        const query = from(data)
+          .select(
+            "nom_cientifico",
+            "nom_comun",
+            "num_arbol",
+            "comuna",
+            "barrio",
+            "x",
+            "y"
+          )
+          .derive({
+            x: escape((d) => fixCRS(d.x, d.y, 1)),
+            y: escape((d) => fixCRS(d.x, d.y, 2)),
+          })
+          .objects();
 
-      const featureCollection = turf.featureCollection(
-        query.map((entry) => {
-          const { x, y, ...properties } = entry;
-          return turf.point([entry.x, entry.y], properties);
-        })
-      );
-      setPoints(featureCollection);
+        const featureCollection = turf.featureCollection(
+          query.map((entry) => {
+            const { x, y, ...properties } = entry;
+            return turf.point([entry.x, entry.y], properties);
+          })
+        );
+        setPoints(featureCollection);
+        toast.success("Consulta exitosa");
+      } else {
+        toast.error("No se encontraron coincidencias");
+      }
     }
   }, [data]);
 
@@ -70,20 +84,16 @@ const LeafletMap = () => {
       },
     });
   };
-
-  useEffect(() => {
-    console.log(points && points.features.map((feature) => feature));
-  }, [points]);
-
   //<FeatureLayer url={url} style={setColor} />
   return (
     <div id="map">
       <MapContainer
         className="border border-gray-200"
         zoom={13}
-        center={[4.4326518, -75.1900444]}
+        center={[4.4326518, -75.199]}
         style={{ height: "calc(100vh - 45px)" }}
-        maxZoom={30}
+        maxZoom={40}
+        zoomControl={false}
       >
         <MarkerClusterGroup chunkedLoading>
           {points &&
@@ -93,7 +103,28 @@ const LeafletMap = () => {
                 <Marker
                   key={feature.properties.num_arbol}
                   position={[position[1], position[0]]}
-                />
+                >
+                  <Popup>
+                    <div>
+                      <TooltipSp
+                        text="Nombre científico"
+                        feature={feature.properties.nom_cientifico}
+                      />
+                      <TooltipSp
+                        text="Nombre común"
+                        feature={feature.properties.nom_comun}
+                      />
+                      <TooltipSp
+                        text="Barrio"
+                        feature={feature.properties.barrio}
+                      />
+                      <TooltipSp
+                        text="Comuna"
+                        feature={feature.properties.comuna}
+                      />
+                    </div>
+                  </Popup>
+                </Marker>
               );
             })}
         </MarkerClusterGroup>
@@ -101,6 +132,7 @@ const LeafletMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'"
         />
+        <ZoomControl position="bottomright" />
       </MapContainer>
     </div>
   );

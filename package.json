@@ -28,6 +28,7 @@
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
     "react-spinners-kit": "^1.9.1",
+    "react-toastify": "^10.0.5",
     "soda-js": "^0.2.3"
   },
   "devDependencies": {
