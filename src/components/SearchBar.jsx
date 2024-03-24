@@ -55,7 +55,7 @@ const SearchBar = () => {
           onChange={(e) => setField(e)}
         />
         <Input.Search
-          placeholder={field === "nom_cientifico" ? "Tabebuia rosea" : "Ocobo"}
+          placeholder={field === "nom_cientifico" ? "Delonix regia" : "Acacio rojo"}
           allowClear
           onSearch={(e) => {
             fetchData(e, field);
