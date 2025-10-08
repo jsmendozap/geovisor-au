@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
-import soda from "soda-js";
 import { WaveSpinner } from "react-spinners-kit";
 import Row from "./Row";
 import dna from "../media/dna.svg";
@@ -15,14 +14,21 @@ const Sidebar = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    new soda.Consumer("datos.gov.co")
-      .query()
-      .withDataset("am4p-tz7w")
-      .limit(1000000)
-      .getRows()
-      .on("success", (rows) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "/api/am4p-tz7w.json?$limit=1000000"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const rows = await response.json();
         setData(rows);
-      });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const items = [

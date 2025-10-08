@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Input, Select, Space } from "antd";
 import { DataContext } from "../App";
-import soda from "soda-js";
 
 const options = [
   {
