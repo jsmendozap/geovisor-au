@@ -27,23 +27,29 @@ const SearchBar = () => {
   const [field, setField] = useState("nom_cientifico");
   const [data, setData] = useContext(DataContext);
 
-  const fetchData = (e, field) => {
-    const filter = {};
-    filter[field] = capitalize(e.replace(/\s/g, "_"));
-
-    new soda.Consumer("datos.gov.co")
-      .query()
-      .withDataset("am4p-tz7w")
-      .limit(1000000)
-      .where(filter)
-      .getRows()
-      .on("success", (rows) => {
-        setData(rows);
-      })
-      .on("error", (error) => {
-        console.error("Error");
-      });
-  };
+  const fetchData = async (e, field) => {
+  const filter = capitalize(e.replace(/\s/g, "_"));
+  
+  const baseURL = '/api/am4p-tz7w.json';
+  
+  const params = new URLSearchParams({
+    [field]: filter,
+    $limit: '1000000'
+  });
+  
+  try {
+    const response = await fetch(`${baseURL}?${params.toString()}`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const rows = await response.json();
+    setData(rows);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
   return (
     <>
