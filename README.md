@@ -1,35 +1,60 @@
-# Geovisor AU
+# Geovisor AU – Urban Tree Census Viewer
 
-Este proyecto es un geovisor web para visualizar y consultar el censo de arbolado urbano en Ibagué, basado en datos abiertos de [datos.gov.co](https://www.datos.gov.co/).
+An interactive web geoportal for visualizing and querying Ibagué’s urban tree census, built with open government data.
 
-**Disponible en:** [https://geovisor-au.vercel.app](https://geovisor-au.vercel.app)
+**Live Demo:** [https://geovisor-au.vercel.app](https://geovisor-au.vercel.app)
 
-## Características
+---
 
-- Visualización de cifras de biodiversidad urbana.
-- Búsqueda por nombre científico y común de especies.
-- Consulta de árboles por comuna.
-- Estado de conservación según la UICN.
-- Interfaz interactiva y responsiva.
-- Datos obtenidos dinámicamente desde la API pública.
+## Overview
 
-## Tecnologías
+This project transforms Colombia’s open urban forestry data into an accessible, interactive visualization tool. It enables citizens, urban planners, and environmental researchers to explore biodiversity patterns, conservation status, and the spatial distribution of over **100,000 trees** across Ibagué’s urban area.
 
-- [React](https://react.dev/)
-- [Vite](https://vitejs.dev/)
-- [Ant Design](https://ant.design/)
-- [Vercel](https://vercel.com/) para despliegue y proxy de API
+---
 
-## Uso
+## Features
 
-- Utiliza la barra de búsqueda para filtrar especies por nombre científico o común.
-- Explora las cifras y mapas en la barra lateral.
-- Consulta información detallada sobre cada especie y su estado de conservación.
+### Biodiversity Dashboard
 
-## Fuente de datos
+- Real-time statistics: total trees, unique species, and botanical families  
+- Growth habit classification (trees, shrubs, palms, bamboo)  
+- Interactive charts with animated counters  
 
-- [Censo de Arbolado urbano en Ibagué - datos.gov.co](https://www.datos.gov.co/Ambiente-y-Desarrollo-Sostenible/Censo-de-Arbolado-urbano-en-Ibagu-Sria-Ambiente-y-/am4p-tz7w/about_data)
+### Interactive Mapping
 
-## Licencia
+- Clustered markers for efficient performance with large datasets (100k+ points)  
+- Species-based filtering and detailed popups  
 
-MIT
+### Advanced Search
+
+- Dual search modes: scientific and common names  
+- Real-time API queries with dynamic filtering  
+- Responsive UI with instant visual feedback  
+
+### Spatial Distribution
+
+- Tree counts by commune (proportional bar chart)  
+- Neighborhood-level details available via popups  
+
+---
+
+## Technical Stack
+
+### Frontend
+
+- React 18 + Vite  
+- Tailwind CSS + Ant Design components  
+
+### Mapping & Geospatial
+
+- Leaflet + React-Leaflet  
+- React Leaflet Cluster (marker clustering)  
+- Turf.js (geospatial calculations)  
+- Proj4js (coordinate transformations)  
+
+---
+
+## Data Source
+
+- **Dataset:** *Censo de Arbolado Urbano en Ibagué*  
+- **Provider:** Colombian Open Data Portal ([datos.gov.co](https://www.datos.gov.co))  
